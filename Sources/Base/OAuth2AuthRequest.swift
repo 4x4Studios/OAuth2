@@ -144,8 +144,10 @@ open class OAuth2AuthRequest {
 	- returns: NSURLComponents representing the receiver
 	*/
 	func asURLComponents() throws -> URLComponents {
-		let comp = URLComponents(url: url, resolvingAgainstBaseURL: false)
-		guard var components = comp, "https" == components.scheme else {
+		guard var components = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
+				throw OAuth2Error.malformedURL(url)
+		}
+		guard "https" == components.scheme || ("http" == components.scheme && "localhost" == components.host) else {
 			throw OAuth2Error.notUsingTLS
 		}
 		if .GET == method && params.count > 0 {

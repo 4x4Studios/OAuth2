@@ -36,7 +36,9 @@ public enum OAuth2Error: Error, CustomStringConvertible, Equatable {
 	
 	/// Invalid URL components, failed to create a URL
 	case invalidURLComponents(URLComponents)
-	
+
+	/// Malformed URL, failed to create URL components
+	case malformedURL(URL)
 	
 	// MARK: - Client errors
 	
@@ -201,7 +203,9 @@ public enum OAuth2Error: Error, CustomStringConvertible, Equatable {
 			return error.localizedDescription
 		case .invalidURLComponents(let components):
 			return "Failed to create URL from components: \(components)"
-		
+		case .malformedURL(let url):
+				return "Failed to create components from URL: \(url)"
+
 		case .noClientId:
 			return "Client id not set"
 		case .noClientSecret:
