@@ -147,8 +147,9 @@ open class OAuth2AuthRequest {
 		guard var components = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
 				throw OAuth2Error.malformedURL(url)
 		}
-		guard "https" == components.scheme || ("http" == components.scheme && "localhost" == components.host) else {
-			throw OAuth2Error.notUsingTLS
+    // Validate scheme, but let app transport security policy enforce TLS:
+		guard components.scheme != nil, ["https", "http"].contains(components.scheme!.lowercased()) else {
+			throw OAuth2Error.invalidScheme
 		}
 		if .GET == method && params.count > 0 {
 			components.percentEncodedQuery = params.percentEncodedQueryString()

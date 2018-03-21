@@ -88,7 +88,7 @@ public enum OAuth2Error: Error, CustomStringConvertible, Equatable {
 	// MARK: - Request errors
 	
 	/// The request is not using SSL/TLS.
-	case notUsingTLS
+	case invalidScheme
 	
 	/// Unable to open the authorize URL.
 	case unableToOpenAuthorizeURL
@@ -236,8 +236,8 @@ public enum OAuth2Error: Error, CustomStringConvertible, Equatable {
 		case .noRegistrationURL:
 			return "No registration URL defined"
 		
-		case .notUsingTLS:
-			return "You MUST use HTTPS/SSL/TLS"
+		case .invalidScheme:
+			return "You MUST use HTTP or HTTPS"
 		case .unableToOpenAuthorizeURL:
 			return "Cannot open authorize URL"
 		case .invalidRequest:
@@ -307,7 +307,7 @@ public enum OAuth2Error: Error, CustomStringConvertible, Equatable {
 		case (.noAccessToken, .noAccessToken):                       return true
 		case (.noRefreshToken, .noRefreshToken):                     return true
 		
-		case (.notUsingTLS, .notUsingTLS):                           return true
+		case (.invalidScheme, .invalidScheme):                           return true
 		case (.unableToOpenAuthorizeURL, .unableToOpenAuthorizeURL): return true
 		case (.invalidRequest, .invalidRequest):                     return true
 		case (.requestCancelled, .requestCancelled):                 return true
